@@ -1,0 +1,97 @@
+#:kivy 2.3.1
+
+<MainWidget>:
+    orientation: 'vertical'
+    canvas:
+        Color: 
+            rgb: 0.5,0.5,0.5
+        Rectangle:
+            size: self.size
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1, 0.1)
+        spacing: 10
+        Label:
+            text: 'SUPERVISÓRIO REFRIGERAÇÃO v1.0'
+            size_hint_x: None
+            width: 300
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: None
+            width: 400
+            Label:
+                text: 'Configurações'
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: "MODBUS"
+                    on_release: root._modbusPopup.open()
+                Button:
+                    text: "Scan Time"
+                    on_release: root._scanPopup.open()
+        Image:
+            id: img_con
+            size_hint_x: None
+            width: 80
+            source: 'assets/desconectado.png'
+            pos_hint: {'top': 1, 'right': 1}
+
+    FloatLayout:
+        canvas:
+            Color: 
+                rgb: 1,1,1
+            Rectangle:
+                size: self.size
+        Image:
+            source: 'assets/fundo.png'
+        Label:
+            id: encoder_axial
+            text: '-.- RPM'
+            font_size: 25
+            bold: True
+            halign: 'center'
+            pos_hint: {'x':-0.326,'y':0.365}
+            color: 0,0,0,1
+        TempLabel:
+            id: torque_axial
+            text: '-.- N.m'
+            pos_hint: {'x':-0.457,'y':0.30}
+        TempLabel:
+            id:  pit01 #Pressão do tubo azul 
+            text: '-.- psi'
+            pos_hint: {'x':-0.045,'y':0.085}
+        TempLabel:
+            id:  pit02 #Pressão do tubo vermelho
+            text: '-.- psi'
+            pos_hint: {'x':-0.03,'y':-0.09}
+        TempLabel:
+            id:  pit03 #Pressão do ar de entrada
+            text: '-.- mmH2O'
+            pos_hint: {'x':-0.2,'y':0.44}
+        TempLabel:
+            id: tit01 #Temperatura do tubo azul
+            text: '-.- °C'
+            pos_hint: {'x':-0.045,'y':0.125}
+        TempLabel:
+            id: tit02 #Temperatura do tubo vermelho (trocador de calor)
+            text: '-.- °C'
+            pos_hint: {'x':-0.025,'y':-0.305}
+        TempLabel:
+            id: vazao #Vazão do ar na saída do tubo
+            text: '-.- m³/h'
+            pos_hint: {'x':0.44,'y':0.41}
+        TempLabel:
+            id: velocidade #Velocidade do ar na saída do tubo
+            text: '-.- m/s'
+            pos_hint: {'x':0.438,'y':0.37}
+        TempLabel:
+            id: temperatura #temperatura do ar na saída do tubo
+            text: '-.- °C'
+            pos_hint: {'x':0.438,'y':0.33}
+
+
+<TempLabel@Label>:
+    font_size: 20
+    bold: True
+    halign: 'center'
+    color: 0,0,0,1

@@ -1,0 +1,105 @@
+#:kivy 2.3.1
+
+<ModbusPopup>:
+    title: "Configurações MODBUS"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 250  # Aumentando altura total do Popup
+    
+    BoxLayout:
+        orientation: 'vertical'
+        id: layout
+        spacing: 10  # Espaçamento entre os elementos
+        padding: [10, 10, 10, 10]
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 40  # Definindo altura fixa das linhas
+            row_force_default: True  # Forçando todas as linhas a terem a mesma altura
+
+            Label:
+                text: "IP"
+                font_size: 14
+            TextInput:
+                id: txt_ip
+                text: "127.0.0.1"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: None
+                height: 35  # Ajuste na altura do campo
+
+            Label:
+                text: "Porta"
+                font_size: 14
+            TextInput:
+                id: txt_porta
+                text: "502"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: None
+                height: 35
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50  # Aumentando a área dos botões
+            spacing: 10
+            Button:
+                text: "Conectar"
+                on_release:
+                    root.clearInfo()
+                    app.root.startDataRead(txt_ip.text, int(txt_porta.text))
+            Button:
+                text: "Fechar"
+                on_release: 
+                    root.dismiss()
+                    root.clearInfo()
+
+
+<ScanPopup>:
+    title: "Configurações ScanTime"
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 180  # Aumentando um pouco a altura
+    
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: [10, 10, 10, 10]
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 40
+            row_force_default: True
+
+            Label:
+                text: "ScanTime [ms]"
+                font_size: 14
+            TextInput:
+                id: txt_st
+                text: "502"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: None
+                height: 35
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            Button:
+                text: "Configurar"
+                on_release:
+                    app.root._scan_time = int(txt_st.text)
+                    root.dismiss()
+            Button:
+                text: "Fechar"
+                on_release: root.dismiss()
