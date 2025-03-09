@@ -16,7 +16,39 @@ class MainApp(App):
             "pit03": 1226,
             "temperatura": 710,
             "velocidade": 712,
-            "vazao": 714
+            "vazao": 714,
+
+            #Temperaturas
+            "temp_r": 700,
+            "temp_s": 702,
+            "temp_t": 704,
+            "temp_carc": 706,
+
+            #Tensões
+            "tensao_rs_co": 732,
+            "tensao_st_co": 733,
+            "tensao_tr_co": 734,
+
+            #Correntes
+            "corrente_r_co": 726,
+            "corrente_s_co": 727,
+            "corrente_t_co": 728,
+            "corrente_n_co": 729,
+            "corrente_media_co": 731,
+
+            #Potências (ativa, reativa, aparente)
+            "ativa_r_co": 735,
+            "ativa_s_co": 736,
+            "ativa_t_co": 737,
+            "ativa_total_co": 738,
+            "reativa_r_co": 739,
+            "reativa_s_co": 740,
+            "reativa_t_co": 741,
+            "reativa_total_co": 742,
+            "aparente_r_co": 743,
+            "aparente_s_co": 744,
+            "aparente_t_co": 745,
+            "aparente_total_co": 746
         })
         
         return self._widget

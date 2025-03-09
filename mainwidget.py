@@ -1,5 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
-from popups import ModbusPopup, ScanPopup
+from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraTensao, MonitoraCorrente, MonitoraPotencias
 from pymodbus.payload import BinaryPayloadBuilder, BinaryPayloadDecoder
 from pymodbus.constants import Endian
 from pyModbusTCP.client import ModbusClient
@@ -22,6 +22,11 @@ class MainWidget(BoxLayout):
         self._modbusPopup = ModbusPopup(self._serverIP, self._serverPort)
         self._scanPopup = ScanPopup(scantime=self._scan_time)
         self._modbusClient = ModbusClient(host=self._serverIP, port=self._serverPort)
+        self._monitoramentoPopup = MonitoramentoPopup()
+        self._monitoraTemperatura = MonitoraTemperatura()
+        self._monitoraTensao = MonitoraTensao()
+        self._monitoraCorrente = MonitoraCorrente()
+        self._monitoraPotencias = MonitoraPotencias()
         self._meas = {}
         self._meas["timestamp"] = None
         self._meas["values"] = {}

@@ -103,3 +103,158 @@
             Button:
                 text: "Fechar"
                 on_release: root.dismiss()
+
+<MonitoramentoPopup>:
+    size_hint_y: None
+    size_hint_x: 0.4
+    height: 300
+
+<MonitoraTemperatura@MonitoramentoPopup>:
+    title: 'Temperaturas'
+    GridLayout:
+        cols:2
+        rows:4
+        Label:
+            text: "Carcaça"
+        Label:
+            id: temp_carc
+            text: '-.- °C'
+        Label:
+            text: "Enrolamento Fase R"
+        Label:
+            id: temp_r
+            text: '-.- °C'
+        Label:
+            text: "Enrolamento Fase S"
+        Label:
+            id: temp_s
+            text: '-.- °C'
+        Label:
+            text: "Enrolamento Fase T"
+        Label:
+            id: temp_t
+            text: '-.- °C'
+
+
+<MonitoraTensao@MonitoramentoPopup>:
+    title: 'Tensões'
+    GridLayout:
+        cols:2
+        rows:3
+        # Label:
+        #     text: "Média"
+        # Label:
+        #     id: tensao_media
+        #     text: '-.- V'
+        Label:
+            text: "Fase RS"
+        Label:
+            id: tensao_rs_co
+            text: '-.- V'
+        Label:
+            text: "Fase ST"
+        Label:
+            id: tensao_st_co
+            text: '-.- V'
+        Label:
+            text: "Fase TR"
+        Label:
+            id: tensao_tr_co
+            text: '-.- V'
+
+<MonitoraCorrente@MonitoramentoPopup>:
+    title: 'Correntes'
+    GridLayout:
+        cols:2
+        rows:5
+        Label:
+            text: "Média"
+        Label:
+            id: corrente_media_co
+            text: '-.- A'
+        Label:
+            text: "Corrente R"
+        Label:
+            id: corrente_r_co
+            text: '-.- A'
+        Label:
+            text: "Corrente S"
+        Label:
+            id: corrente_s_co
+            text: '-.- A'
+        Label:
+            text: "Corrente T"
+        Label:
+            id: corrente_t_co
+            text: '-.- A'
+        Label:
+            text: "Corrente N"
+        Label:
+            id: corrente_n_co
+            text: '-.- A'
+
+<MonitoraPotencias@MonitoramentoPopup>:
+    title: 'Potências'
+    size_hint_x: 0.8
+    GridLayout:
+        cols:4
+        rows:5
+        Label:
+            text: " "
+        Label:
+            text: "Potência Ativa"
+        Label:
+            text: "Potência Reativa"
+        Label:
+            text: "Potência Aparente"
+
+
+        Label:
+            text: "Total"
+        Label:
+            id: ativa_total_co
+            text: '-.- W'
+        Label:
+            id: reativa_total_co
+            text: '-.- VAr'
+        Label:
+            id: aparente_total_co
+            text: '-.- VA'
+
+
+        Label:
+            text: "Fase R"
+        Label:
+            id: ativa_r_co
+            text: '-.- W'
+        Label:
+            id: reativa_r_co
+            text: '-.- VAr'
+        Label:
+            id: aparente_r_co
+            text: '-.- VA'
+
+        Label:
+            text: "Fase S"
+        Label:
+            id: ativa_s_co
+            text: '-.- W'
+        Label:
+            id: reativa_s_co
+            text: '-.- VAr'
+        Label:
+            id: aparente_s_co
+            text: '-.- VA'
+
+
+        Label:
+            text: "Fase T"
+        Label:
+            id: ativa_t_co
+            text: '-.- W'
+        Label:
+            id: reativa_t_co
+            text: '-.- VAr'
+        Label:
+            id: aparente_t_co
+            text: '-.- VA'
