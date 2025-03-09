@@ -43,8 +43,14 @@ class MainWidget(BoxLayout):
                 unit = " m³/h"
             elif key == "velocidade":
                 unit = " m/s"
+            elif str(key).startswith("temp"):
+                unit = " °C"
+            elif "corrente" in key:
+                unit = " A"
+            elif "ativa" in key or "reativa" in key or "aparente" in key or "tensao" in key:
+                unit = " V"
             else:
-                unit = " ?"
+                unit = " °C"
             plot_color = (random.random(), random.random(), random.random(), 1)
             self._tags[key] = {"addr": value, "color": plot_color, "unit": unit}
 
@@ -82,8 +88,12 @@ class MainWidget(BoxLayout):
 
     def readData(self):
         self._meas["timestamp"] = datetime.now()
+        keywords = ["aparente", "corrente", "tensao", "ativa", "reativa"]
         for key, value in self._tags.items():
-            self._meas["values"][key] = self.readFloat(value["addr"])
+            if any(word in key.lower() for word in keywords): 
+                self._meas["values"][key] = self._modbusClient.read_holding_registers(value["addr"],1)[0]
+            else:
+                self._meas["values"][key] = self.readFloat(value["addr"])
 
     def readFloat(self, addr):
         result = self._modbusClient.read_holding_registers(addr, 2)
@@ -92,4 +102,15 @@ class MainWidget(BoxLayout):
 
     def updateGUI(self):
         for key, value in self._tags.items():
-            self.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
+            if str(key).startswith("temp") and key is not "temperatura":
+                self._monitoraTemperatura.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
+            elif key.startswith("tensao"):
+                self._monitoraTensao.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
+            elif key.startswith("corrente"):
+                self._monitoraCorrente.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
+            elif key.startswith("corrente"):
+                self._monitoraCorrente.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
+            elif key.startswith("ativa") or key.startswith("reativa") or key.startswith("aparente"):
+                self._monitoraPotencias.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
+            else:
+                self.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
