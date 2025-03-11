@@ -68,9 +68,9 @@ class MainWidget(BoxLayout):
         self._meas["timestamp"] = datetime.now()
         for key, value in self._tags.items():
             if value.modbus_type == ModbusType.FP:
-                self._meas["values"][key] = self.readFloat(value.addr)
+                self._meas["values"][key] = self.readFloat(value.addr)/value.divisor
             else:
-                self._meas["values"][key] = self._modbusClient.read_holding_registers(value.addr,1)[0]
+                self._meas["values"][key] = self._modbusClient.read_holding_registers(value.addr,1)[0]/value.divisor
 
                 
 

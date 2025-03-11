@@ -9,7 +9,7 @@ class Tag:
         self.addr = addr
         self.modbus_type = modbus_type
         self.unit = unit.value
-        self.multiplier = divisor
+        self.divisor = divisor
         self.root_widget= root_widget
 
 class MainApp(App):
