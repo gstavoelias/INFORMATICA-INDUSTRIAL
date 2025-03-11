@@ -6,6 +6,7 @@ from pyModbusTCP.client import ModbusClient
 from kivy.core.window import Window
 from threading import Thread
 from time import sleep
+from utils import Units, ModbusType
 from datetime import datetime
 import random
 
@@ -19,6 +20,7 @@ class MainWidget(BoxLayout):
         self._scan_time = kwargs.get('scan_time')
         self._serverIP = kwargs.get("server_ip")
         self._serverPort = kwargs.get("server_port")
+        self._tags = kwargs.get("modbus_addrs")
         self._modbusPopup = ModbusPopup(self._serverIP, self._serverPort)
         self._scanPopup = ScanPopup(scantime=self._scan_time)
         self._modbusClient = ModbusClient(host=self._serverIP, port=self._serverPort)
@@ -30,29 +32,6 @@ class MainWidget(BoxLayout):
         self._meas = {}
         self._meas["timestamp"] = None
         self._meas["values"] = {}
-        for key, value in kwargs.get("modbus_addrs").items():
-            if key == "encoder_axial":
-                unit = " RPM"
-            elif key == "torque_axial":
-                unit = " N.m"
-            elif str(key).startswith("pit"):
-                unit = " psi"
-            elif str(key).startswith("tit") or key == "temperatura":
-                unit = " °C"
-            elif key == "vazao":
-                unit = " m³/h"
-            elif key == "velocidade":
-                unit = " m/s"
-            elif str(key).startswith("temp"):
-                unit = " °C"
-            elif "corrente" in key:
-                unit = " A"
-            elif "ativa" in key or "reativa" in key or "aparente" in key or "tensao" in key:
-                unit = " V"
-            else:
-                unit = " °C"
-            plot_color = (random.random(), random.random(), random.random(), 1)
-            self._tags[key] = {"addr": value, "color": plot_color, "unit": unit}
 
     def startDataRead(self, ip, port):
         self._serverIP = ip
@@ -64,7 +43,6 @@ class MainWidget(BoxLayout):
             self._modbusClient.open()
             Window.set_system_cursor("arrow")
             if self._modbusClient.is_open:
-                print("a")
                 self._updateThread = Thread(target=self.updater)
                 self._updateThread.start()
                 self.ids.img_con.source = "assets/conectado.png"
@@ -88,12 +66,14 @@ class MainWidget(BoxLayout):
 
     def readData(self):
         self._meas["timestamp"] = datetime.now()
-        keywords = ["aparente", "corrente", "tensao", "ativa", "reativa"]
         for key, value in self._tags.items():
-            if any(word in key.lower() for word in keywords): 
-                self._meas["values"][key] = self._modbusClient.read_holding_registers(value["addr"],1)[0]
+            if value.modbus_type == ModbusType.FP:
+                self._meas["values"][key] = self.readFloat(value.addr)
             else:
-                self._meas["values"][key] = self.readFloat(value["addr"])
+                self._meas["values"][key] = self._modbusClient.read_holding_registers(value.addr,1)[0]
+
+                
+
 
     def readFloat(self, addr):
         result = self._modbusClient.read_holding_registers(addr, 2)
@@ -101,16 +81,9 @@ class MainWidget(BoxLayout):
         return decoder.decode_32bit_float()
 
     def updateGUI(self):
+        
         for key, value in self._tags.items():
-            if str(key).startswith("temp") and key is not "temperatura":
-                self._monitoraTemperatura.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
-            elif key.startswith("tensao"):
-                self._monitoraTensao.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
-            elif key.startswith("corrente"):
-                self._monitoraCorrente.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
-            elif key.startswith("corrente"):
-                self._monitoraCorrente.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
-            elif key.startswith("ativa") or key.startswith("reativa") or key.startswith("aparente"):
-                self._monitoraPotencias.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
-            else:
-                self.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value["unit"]
+            for widget in [self, self._monitoraTemperatura, self._monitoraTensao, self._monitoraCorrente, self._monitoraPotencias, self._monitoramentoPopup]:
+                if isinstance(widget, value.root_widget):
+                    widget.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value.unit
+                    break 
