@@ -100,8 +100,16 @@
 
         TempLabel:
             id: temperatura #temperatura do ar na saída do tubo
-            text: '-.- m/s'
+            text: '-.- °C'
             pos_hint: {'x':0.438,'y':0.33}
+        Button:
+            size_hint: (None, None)
+            size: (0.65*62, 0.65*58)
+            background_normal: 'assets/graph_icon.jpg'
+            background_down: 'assets/graph_icon.jpg'
+            on_release:
+                root._graph.open()
+
 
         # Painel de botões à direita sobre a imagem
         BoxLayout:

@@ -1,5 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
-from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraTensao, MonitoraCorrente, MonitoraPotencias
+from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraTensao, MonitoraCorrente, MonitoraPotencias, DataGraphPopup
 from pymodbus.payload import BinaryPayloadBuilder, BinaryPayloadDecoder
 from pymodbus.constants import Endian
 from pyModbusTCP.client import ModbusClient
@@ -15,6 +15,8 @@ class MainWidget(BoxLayout):
     _updateThread = None
     _updateWidgets = True
     _tags = {}
+    max_points = 20
+
     def __init__(self, **kwargs):
         super().__init__()
         self._scan_time = kwargs.get('scan_time')
@@ -29,6 +31,7 @@ class MainWidget(BoxLayout):
         self._monitoraTensao = MonitoraTensao()
         self._monitoraCorrente = MonitoraCorrente()
         self._monitoraPotencias = MonitoraPotencias()
+        self._graph = DataGraphPopup(self.max_points, (1,0,0,1))
         self._meas = {}
         self._meas["timestamp"] = None
         self._meas["values"] = {}
@@ -87,3 +90,8 @@ class MainWidget(BoxLayout):
                 if isinstance(widget, value.root_widget):
                     widget.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value.unit
                     break 
+        
+        self._graph.ids.graph.updateGraph((self._meas["timestamp"], self._meas["values"]["temperatura"]), 0)
+
+    def stopRefresh(self):
+        self._updateWidgets = False

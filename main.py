@@ -54,8 +54,11 @@ class MainApp(App):
                 "aparente_t_co": Tag(addr=745, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER,root_widget=MonitoraPotencias),
                 "aparente_total_co": Tag(addr=746, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraPotencias)
             })
-        
         return self._widget
+    
+
+    def on_stop(self):
+        self._widget.stopRefresh()
     
 
 
