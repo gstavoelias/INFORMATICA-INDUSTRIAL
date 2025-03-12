@@ -14,6 +14,7 @@ class Tag:
 
 class MainApp(App):
     def build(self) -> None:
+        
         self._widget = MainWidget(
             scan_time=1000,
             server_ip="127.0.0.1", 

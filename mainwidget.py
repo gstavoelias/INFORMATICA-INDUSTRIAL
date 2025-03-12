@@ -9,6 +9,8 @@ from time import sleep
 from utils import Units, ModbusType
 from datetime import datetime
 import random
+from models import DadoVentilador
+from db import Session, Base, engine
 
 class MainWidget(BoxLayout):
 
@@ -35,6 +37,8 @@ class MainWidget(BoxLayout):
         self._meas = {}
         self._meas["timestamp"] = None
         self._meas["values"] = {}
+        Base.metadata.create_all(engine)
+        self._session = Session()
 
     def startDataRead(self, ip, port):
         self._serverIP = ip
@@ -61,6 +65,7 @@ class MainWidget(BoxLayout):
             while self._updateWidgets:
                 self.readData()
                 self.updateGUI()
+                self.updateDB()
                 sleep(self._scan_time/1000)
         except Exception as e:
             self._modbusClient.close()
@@ -95,3 +100,12 @@ class MainWidget(BoxLayout):
 
     def stopRefresh(self):
         self._updateWidgets = False
+
+
+    def updateDB(self):
+        try:
+            data = DadoVentilador(**self._meas["values"])
+            self._session.add(data)
+            self._session.commit()
+        except Exception as e:
+            print(e)
