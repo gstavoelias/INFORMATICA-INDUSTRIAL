@@ -1,5 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
-from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraTensao, MonitoraCorrente, MonitoraPotencias, DataGraphPopup
+from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraTensao, MonitoraCorrente, MonitoraPotencias, DataGraphPopup, HistGraphPopup
 from pymodbus.payload import BinaryPayloadBuilder, BinaryPayloadDecoder
 from pymodbus.constants import Endian
 from pyModbusTCP.client import ModbusClient
@@ -34,6 +34,7 @@ class MainWidget(BoxLayout):
         self._monitoraCorrente = MonitoraCorrente()
         self._monitoraPotencias = MonitoraPotencias()
         self._graph = DataGraphPopup(self.max_points, (1,0,0,1))
+        self._hgraph = HistGraphPopup(tags=self._tags)
         self._meas = {}
         self._meas["timestamp"] = None
         self._meas["values"] = {}
@@ -85,7 +86,7 @@ class MainWidget(BoxLayout):
 
     def readFloat(self, addr):
         result = self._modbusClient.read_holding_registers(addr, 2)
-        decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.BIG, wordorder=Endian.BIG)
+        decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
         return decoder.decode_32bit_float()
 
     def updateGUI(self):

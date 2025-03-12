@@ -74,3 +74,33 @@ class DataGraphPopup(Popup):
 
 class LabeledCheckBoxDataGraph(BoxLayout):
     pass
+
+
+class HistGraphPopup(Popup):
+    def __init__(self, **kwargs):
+        super().__init__()
+        
+        # Criar CheckBoxes para os sensores dentro do ScrollView
+        for key, value in kwargs.get("tags", {}).items():
+            cb = LabeledCheckBoxHistGraph()
+            cb.ids.label.text = key
+            cb.ids.label.color = (1, 0, 0, 1)
+            cb.id = key
+            self.ids.sensores.add_widget(cb)
+
+    def confirmar_selecao(self):
+        """
+        Função chamada ao clicar no botão 'Confirmar Seleção'.
+        Aqui você pode capturar quais sensores foram selecionados.
+        """
+        sensores_selecionados = []
+        for checkbox in self.ids.sensores.children:
+            if checkbox.ids.checkbox.active:  # Se o CheckBox estiver marcado
+                sensores_selecionados.append(checkbox.ids.label.text)
+
+        print("Sensores selecionados:", sensores_selecionados)
+        # Aqui você pode atualizar o gráfico com base na seleção
+
+
+class LabeledCheckBoxHistGraph(BoxLayout):
+    pass
