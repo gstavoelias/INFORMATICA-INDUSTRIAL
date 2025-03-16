@@ -1,5 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
-from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraTensao, MonitoraCorrente, MonitoraPotencias, DataGraphPopup, HistGraphPopup
+from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraCompressor, DataGraphPopup, HistGraphPopup
 from pymodbus.payload import BinaryPayloadBuilder, BinaryPayloadDecoder
 from pymodbus.constants import Endian
 from pyModbusTCP.client import ModbusClient
@@ -30,9 +30,7 @@ class MainWidget(BoxLayout):
         self._modbusClient = ModbusClient(host=self._serverIP, port=self._serverPort)
         self._monitoramentoPopup = MonitoramentoPopup()
         self._monitoraTemperatura = MonitoraTemperatura()
-        self._monitoraTensao = MonitoraTensao()
-        self._monitoraCorrente = MonitoraCorrente()
-        self._monitoraPotencias = MonitoraPotencias()
+        self._monitoraCompressor = MonitoraCompressor()
         self._graph = DataGraphPopup(self.max_points, (1,0,0,1))
         self._hgraph = HistGraphPopup(tags=self._tags)
         self._meas = {}
@@ -92,7 +90,7 @@ class MainWidget(BoxLayout):
     def updateGUI(self):
         
         for key, value in self._tags.items():
-            for widget in [self, self._monitoraTemperatura, self._monitoraTensao, self._monitoraCorrente, self._monitoraPotencias, self._monitoramentoPopup]:
+            for widget in [self, self._monitoraTemperatura, self._monitoraCompressor, self._monitoramentoPopup]:
                 if isinstance(widget, value.root_widget):
                     widget.ids[key].text = "{:.2f}".format(self._meas["values"][key]) + value.unit
                     break 

@@ -47,19 +47,7 @@ class MonitoraTemperatura(MonitoramentoPopup):
     """
     pass
 
-class MonitoraTensao(MonitoramentoPopup):
-    """
-    Popup da janela de monitoramento da tensão
-    """
-    pass
-
-class MonitoraCorrente(MonitoramentoPopup):
-    """
-    Popup da janela de monitoramento da tensão
-    """
-    pass
-
-class MonitoraPotencias(MonitoramentoPopup):
+class MonitoraCompressor(MonitoramentoPopup):
     """
     Popup da janela de monitoramento da tensão
     """

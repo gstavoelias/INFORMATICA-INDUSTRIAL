@@ -47,6 +47,17 @@
                 size: self.size
         Image: 
             source: 'assets/fundo.png'
+
+        Label: 
+            id: lb_encoder_axial
+            size_hint: (None,None)
+            size: (15,15)
+            canvas: 
+                Color:
+                    rgb:(0.165,0.376,0.647)
+                Rectangle: 
+                    size: self.size 
+                    pos: (150,400)
         
         Label:
             id:  encoder_axial #Rotação mecânica do ventilador
@@ -109,7 +120,52 @@
             background_down: 'assets/graph_icon.jpg'
             on_release:
                 root._graph.open()
+        Button:
+            size_hint: (None, None)
+            size: (100,100)
+            pos: (0,0)
+            background_normal: 'assets/acionamento.png'
+            background_down: 'assets/acionamento.png'
+            on_release:
+                root._graph.open()
 
+        Button:
+            text: "i" #Mostra as temperaturas referentes ao motor
+            font_size: '14sp'
+            bold: True
+            size_hint: (None,None)
+            size: ("16dp","16dp")
+            background_normal: ""
+            background_color: (0,0,0,0)
+            color: (0.4,0.4,0.4,1)
+            border: (16,16,16,16)
+            pos: (132,433)
+            canvas.before: 
+                Color:
+                    rgb: 0.4,0.4,0.4
+                Line:
+                    width: 0.6
+                    circle: (self.center_x, self.center_y,self.width/2)
+            on_release: root._monitoraTemperatura.open()
+
+        Button:
+            text: "i" #Mostra as tensões referentes ao compressor
+            font_size: '14sp'
+            bold: True
+            size_hint: (None,None)
+            size: ("16dp","16dp")
+            background_normal: ""
+            background_color: (0,0,0,0)
+            color: (0.4,0.4,0.4,1)
+            border: (16,16,16,16)
+            pos: (150,80)
+            canvas.before: 
+                Color:
+                    rgb: 0.4,0.4,0.4
+                Line:
+                    width: 0.6
+                    circle: (self.center_x, self.center_y,self.width/2)
+            on_release: root._monitoraCompressor.open()
 
         # Painel de botões à direita sobre a imagem
         BoxLayout:
@@ -126,43 +182,6 @@
                 background_normal: ""
                 color: (1,1,1,1)
                 on_release: 
-                    
-
-            Button:
-                text: "Temperatura"
-                size_hint_y: None
-                height: '50dp'
-                background_color: (0.6,0.6,0.6,1)
-                background_normal: ""
-                color: (1,1,1,1)                
-                on_release: root._monitoraTemperatura.open()
-
-            Button:
-                text: "Tensão"
-                size_hint_y: None
-                height: '50dp'
-                background_color: (0.6,0.6,0.6,1)
-                background_normal: ""
-                color: (1,1,1,1)
-                on_release: root._monitoraTensao.open()
-
-            Button:
-                text: "Corrente"
-                size_hint_y: None
-                height: '50dp'
-                background_color: (0.6,0.6,0.6,1)
-                background_normal: ""
-                color: (1,1,1,1)
-                on_release: root._monitoraCorrente.open()
-
-            Button:
-                text: "Potência"
-                size_hint_y: None
-                height: '50dp'
-                background_color: (0.6,0.6,0.6,1)
-                background_normal: ""
-                color: (1,1,1,1)
-                on_release: root._monitoraPotencias.open()
 
             Button:
                 text: "Dados Históricos"
@@ -178,3 +197,24 @@
     bold: True
     halign: 'center'
     color: 0.4,0.4,0.4,1
+
+<DinamicBar>:
+    orientation: "horizontal"
+    spacing: 10
+
+    Label:
+        text: "TESTE BARRA"
+        size_hint: None, None
+        size: 80, 30
+
+    ProgressBar:
+        min: 0
+        max: 60
+        value: root.encoder_axial
+        size_hint: 1, None
+        height: 30
+
+    Label:
+        text: f"{root.encoder_axial:.1f} °C"
+        size_hint: None, None
+        size: 60, 30
