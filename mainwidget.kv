@@ -115,20 +115,68 @@
             pos_hint: {'x':0.438,'y':0.33}
         Button:
             size_hint: (None, None)
-            size: (0.65*62, 0.65*58)
-            background_normal: 'assets/graph_icon.jpg'
-            background_down: 'assets/graph_icon.jpg'
-            on_release:
-                root._graph.open()
-        Button:
-            size_hint: (None, None)
-            size: (100,100)
-            pos: (0,0)
-            background_normal: 'assets/acionamento.png'
-            background_down: 'assets/acionamento.png'
+            size: (0.65*90, 0.65*90)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
             on_release:
                 root._graph.open()
 
+        #ACIONAMENTO DO COMPRESSOR 1 (DECIDIR QUAL)
+        Button: 
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (50,20)
+            background_normal: 'assets/acionamento.png'
+            background_down: 'assets/acionamento.png'
+            on_release:
+                root._graph.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO CLICAR
+        Button: #Gráfico do compressor 1 (DECIDIR QUAL)
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (78,20)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() #CRIAR UM GRÁFICO PARA ABRIR AO CLICAR
+
+        #ACIONAMENTO DO COMPRESSOR 2 (DECIDIR QUAL)
+        Button: 
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (230,20)
+            background_normal: 'assets/acionamento.png'
+            background_down: 'assets/acionamento.png'
+            on_release:
+                root._graph.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO CLICAR
+        Button: #Gráfico do compressor 2(DECIDIR QUAL)
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (258,20)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() #CRIAR UM GRÁFICO PARA ABRIR AO CLICAR
+
+        #ACIONAMENTO O MOTOR
+        Button: 
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (107,361)
+            background_normal: 'assets/acionamento.png'
+            background_down: 'assets/acionamento.png'
+            on_release:
+                root._graph.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO CLICAR
+        Button: #Gráfico do motor
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (137,361)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() #CRIAR UM GRÁFICO PARA ABRIR AO CLICAR
+
+
+        #INFORMAÇÕES DO BOTÃO (i) DO MOTOR
         Button:
             text: "i" #Mostra as temperaturas referentes ao motor
             font_size: '14sp'
@@ -139,7 +187,7 @@
             background_color: (0,0,0,0)
             color: (0.4,0.4,0.4,1)
             border: (16,16,16,16)
-            pos: (132,433)
+            pos: (155,440)
             canvas.before: 
                 Color:
                     rgb: 0.4,0.4,0.4
@@ -148,6 +196,8 @@
                     circle: (self.center_x, self.center_y,self.width/2)
             on_release: root._monitoraTemperatura.open()
 
+
+        #INFORMAÇÕES DO BOTÃO (i) DO COMPRESSOR
         Button:
             text: "i" #Mostra as tensões referentes ao compressor
             font_size: '14sp'
@@ -158,7 +208,7 @@
             background_color: (0,0,0,0)
             color: (0.4,0.4,0.4,1)
             border: (16,16,16,16)
-            pos: (150,80)
+            pos: (174,115)
             canvas.before: 
                 Color:
                     rgb: 0.4,0.4,0.4
@@ -174,14 +224,14 @@
             pos_hint: {'right': 0.98, 'center_y': 0.47}  # Alinha à direita
             spacing: 4.5
 
-            Button:
-                text: "Comandos"
-                size_hint_y: None
-                height: '50dp'
-                background_color: (0.4,0.4,0.4,1)
-                background_normal: ""
-                color: (1,1,1,1)
-                on_release: 
+            #Button:
+            #    text: "Comandos"
+            #    size_hint_y: None
+            #    height: '50dp'
+            #    background_color: (0.4,0.4,0.4,1)
+            #    background_normal: ""
+            #    color: (1,1,1,1)
+            #    on_release: 
 
             Button:
                 text: "Dados Históricos"
