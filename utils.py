@@ -9,7 +9,10 @@ class Units(Enum):
     ROTATION = "RPM"
     VOLTAGE = "V"
     CURRENT = "A"
-    POWER = "W"
+    ACTIVE_POWER = "W"
+    APPARENT_POWER = "VA"
+    REACTIVE_POWER = "VAr"
+
 
 class ModbusType(Enum):
     FP = "FP"

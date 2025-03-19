@@ -94,7 +94,7 @@ class MainWidget(BoxLayout):
         return decoder.decode_32bit_float()
     
     def readInt(self, addr):
-        result = self._modbusClient.read_holding_registers(addr, 2)
+        result = self._modbusClient.read_holding_registers(addr, 1)
         decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
         return decoder.decode_16bit_int()
     

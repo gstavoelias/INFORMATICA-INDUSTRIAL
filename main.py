@@ -42,18 +42,18 @@ class MainApp(App):
                 "corrente_t_co": Tag(addr=728, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.CURRENT, divisor=10, root_widget=MonitoraCompressor),
                 "corrente_n_co": Tag(addr=729, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.CURRENT, divisor=10, root_widget=MonitoraCompressor),
                 "corrente_media_co": Tag(addr=731, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.CURRENT, divisor=10, root_widget=MonitoraCompressor),
-                "ativa_r_co": Tag(addr=735, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "ativa_s_co": Tag(addr=736, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "ativa_t_co": Tag(addr=737, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "ativa_total_co": Tag(addr=738, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "reativa_r_co": Tag(addr=739, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER,root_widget=MonitoraCompressor),
-                "reativa_s_co": Tag(addr=740, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "reativa_t_co": Tag(addr=741, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "reativa_total_co": Tag(addr=742, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "aparente_r_co": Tag(addr=743, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "aparente_s_co": Tag(addr=744, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor),
-                "aparente_t_co": Tag(addr=745, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER,root_widget=MonitoraCompressor),
-                "aparente_total_co": Tag(addr=746, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.POWER, root_widget=MonitoraCompressor)
+                "ativa_r_co": Tag(addr=735, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.ACTIVE_POWER, root_widget=MonitoraCompressor),
+                "ativa_s_co": Tag(addr=736, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.ACTIVE_POWER, root_widget=MonitoraCompressor),
+                "ativa_t_co": Tag(addr=737, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.ACTIVE_POWER, root_widget=MonitoraCompressor),
+                "ativa_total_co": Tag(addr=738, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.ACTIVE_POWER, root_widget=MonitoraCompressor),
+                "reativa_r_co": Tag(addr=739, modbus_type=ModbusType.INT_16, unit=Units.REACTIVE_POWER,root_widget=MonitoraCompressor),
+                "reativa_s_co": Tag(addr=740, modbus_type=ModbusType.INT_16, unit=Units.REACTIVE_POWER, root_widget=MonitoraCompressor),
+                "reativa_t_co": Tag(addr=741, modbus_type=ModbusType.INT_16, unit=Units.REACTIVE_POWER, root_widget=MonitoraCompressor),
+                "reativa_total_co": Tag(addr=742, modbus_type=ModbusType.INT_16, unit=Units.REACTIVE_POWER, root_widget=MonitoraCompressor),
+                "aparente_r_co": Tag(addr=743, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.APPARENT_POWER, root_widget=MonitoraCompressor),
+                "aparente_s_co": Tag(addr=744, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.APPARENT_POWER, root_widget=MonitoraCompressor),
+                "aparente_t_co": Tag(addr=745, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.APPARENT_POWER,root_widget=MonitoraCompressor),
+                "aparente_total_co": Tag(addr=746, modbus_type=ModbusType.HOLDING_REGISTER, unit=Units.APPARENT_POWER, root_widget=MonitoraCompressor)
             })
         return self._widget
     
