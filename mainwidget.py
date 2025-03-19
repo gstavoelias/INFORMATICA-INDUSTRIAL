@@ -12,7 +12,7 @@ from kivy_garden.graph import LinePlot
 import random
 from models import DadoVentilador
 from db import Session, Base, engine
-
+import time
 
 class MainWidget(BoxLayout):
 
@@ -42,6 +42,7 @@ class MainWidget(BoxLayout):
         self._meas["values"] = {}
         Base.metadata.create_all(engine)
         self._session = Session()
+        self._tipo_partida = None
 
     def startDataRead(self, ip, port):
         self._serverIP = ip
@@ -103,6 +104,30 @@ class MainWidget(BoxLayout):
 
     def writeSingleCoil(self, addr, value):
         self._modbusClient.write_single_coil(addr, value)
+
+
+    def tipoPartida(self, tipo_partida):
+        try:
+            comando = 2 if tipo_partida == "INVERSOR" else 1 if tipo_partida == "SOFT-START" else 3
+            self.writeHoldingRegister(1324, comando)
+            self.tipo_partida = tipo_partida
+            if tipo_partida == "INVERSOR":
+                #TODO: CRIAR UM BOTÃO PRA ESCOLHER O VALOR DA RAMPA
+                self.writeHoldingRegister(1314, 100)
+                self.writeHoldingRegister(1315, 100)
+        except Exception as e:
+            print(f"aqui: {e}")
+
+    def acionaMotor(self, comando):
+        addr = 1312 if self.tipo_partida == "INVERSOR" else 1316 if self.tipo_partida == "SOFT-START" else 1319
+        self.writeHoldingRegister(addr, int(comando))
+    
+    def setRampa(self, value):
+        self.writeHoldingRegister(1314, int(value)*10)
+        time.sleep(0.5)
+        self.writeHoldingRegister(1315, int(value)*10)
+
+
 
     def updateGUI(self):
         

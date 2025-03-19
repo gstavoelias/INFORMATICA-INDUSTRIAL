@@ -453,20 +453,19 @@
                 spacing: 10
                 Label:
                     text: "Ventilador"
-                #BOTÃO PARA LIGAR O MOTOR            
                 Button:
                     text: "Liga"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_axial()  
+                    on_release: app.root.acionaMotor(1)
 
                 #BOTÃO PARA DESLIGAR O MOTOR 
                 Button:
                     text: "Desliga"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()  
+                    on_release: app.root.acionaMotor(2)
                 
                 #BOTÃO RESET
                 Button:
                     text: "Reset"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial() 
+                    on_release: app.root.acionaMotor(3)
 
 
             BoxLayout:
@@ -480,17 +479,17 @@
                 #Partida DIRETA   
                 Button:
                     text: "Direta"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_axial()  
+                    on_release: app.root.tipoPartida("DIRETA")
 
                 #Partida por Inversor 
                 Button:
                     text: "Inversor"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()  
+                    on_release: app.root.tipoPartida("INVERSOR")
                 
                 #Partida por Soft-Start
                 Button:
                     text: "Soft-Start"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()
+                    on_release: app.root.tipoPartida("SOFT-START")
 
             BoxLayout:
             #Manipulador de FREQUENCIA
@@ -504,13 +503,12 @@
                     max: 61 
                     value_track: True
                     value_track_color: [1, 0, 0, 1]
-                    on_touch_move: 
-                        #app.root.velocidade_inversor()
+                    on_touch_up: 
+                        app.root.writeHoldingRegister(1313, int(velocidade_inversor.value)*10)  
+                        #app.root.setRampa(velocidade_rampa.value)
                 Label:
                     text: str(int(velocidade_inversor.value))
-                    # on_touch_move: 
-                    #     root._vel[0] = slider_vel.value*root._vel[0]/abs(root._vel[0])
-                    #     root._vel[1] = slider_vel.value*root._vel[1]/abs(root._vel[1])
+
 
         BoxLayout:
             orientation: 'vertical'
