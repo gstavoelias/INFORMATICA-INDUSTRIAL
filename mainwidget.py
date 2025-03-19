@@ -79,6 +79,9 @@ class MainWidget(BoxLayout):
         for key, value in self._tags.items():
             if value.modbus_type == ModbusType.FP:
                 self._meas["values"][key] = self.readFloat(value.addr)/value.divisor
+            elif value.modbus_type == ModbusType.INT_16:
+                self._meas["values"][key] = self.readInt(value.addr)/value.divisor
+
             else:
                 self._meas["values"][key] = self._modbusClient.read_holding_registers(value.addr,1)[0]/value.divisor
 
@@ -89,6 +92,11 @@ class MainWidget(BoxLayout):
         result = self._modbusClient.read_holding_registers(addr, 2)
         decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.LITTLE, wordorder=Endian.BIG)
         return decoder.decode_32bit_float()
+    
+    def readInt(self, addr):
+        result = self._modbusClient.read_holding_registers(addr, 2)
+        decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.LITTLE, wordorder=Endian.BIG)
+        return decoder.decode_16bit_int()
 
     def updateGUI(self):
         

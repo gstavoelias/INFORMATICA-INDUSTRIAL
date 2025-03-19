@@ -14,3 +14,4 @@ class Units(Enum):
 class ModbusType(Enum):
     FP = "FP"
     HOLDING_REGISTER = "4x"
+    INT_16 = "INT16"
