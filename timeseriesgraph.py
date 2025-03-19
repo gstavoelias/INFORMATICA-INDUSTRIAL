@@ -59,7 +59,7 @@ class TimeSeriesGraph(Graph):
         try:  
             labels = self._timestamps[0:len(self._timestamps):self.x_ticks_major] 
             for i in range(0,min(len(self._x_grid_label),len(labels))):
-                self._x_grid_label[i].text = str(labels[i].strftime("%H:%M:%S"))
+                self._x_grid_label[i].text = labels[i] if isinstance(labels[i], str) else str(labels[i].strftime("%H:%M:%S")) 
         except Exception as e:
             print('Error: ',e.args)
     

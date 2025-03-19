@@ -37,6 +37,6 @@ class MainWidget():
             json.dump(self.measures, f, indent=4)
     
 
-app = MainWidget("localhost", 502)
+app = MainWidget("10.15.30.183", 502)
 app.readData()
 app.displayData()

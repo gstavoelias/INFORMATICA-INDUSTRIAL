@@ -385,27 +385,29 @@
                 height: self.minimum_height  # Ajusta a altura dinamicamente
         BoxLayout:
             orientation: 'horizontal'
-            size_hint: (1, 0.05)
+            size_hint: (1, 0.08)
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: (0.5,1)
                 Label:
                     text: "Timestamp Inicial \r\n [size=12] (DD/MM/AAAA HH:MM:SS)[/size]"
+                    size_hint: (1, 0.8)
                     halign: 'center'
                     markup: True
                 TextInput:
                     id: txt_init_time
-                    size_hint: (1, 0.8)
+                    size_hint: (1, 1)
                     halign: 'center'
                     valign: 'middle'
                     multiline: False
                 Label:
                     text: "Timestamp Final \r\n [size=12] (DD/MM/AAAA HH:MM:SS)[/size]"
                     halign: 'center'
+                    size_hint: (1, 0.8)
                     markup: True
                 TextInput:
                     id: txt_final_time
-                    size_hint: (1, 0.8)
+                    size_hint: (1, 1)
                     halign: 'center'
                     valign: 'middle'
                     multiline: False
@@ -421,6 +423,7 @@
     height: 40
     CheckBox:
         id: checkbox
+        on_active: app.root.getDataDB()
         size_hint_x: 0.2
     Label:
         id: label
