@@ -92,3 +92,7 @@ class HistGraphPopup(Popup):
 
 class LabeledCheckBoxHistGraph(BoxLayout):
     pass
+
+#TENTATIVA DE COMANDO PARA O MOTOR
+class ComandoPopup(Popup):
+    pass

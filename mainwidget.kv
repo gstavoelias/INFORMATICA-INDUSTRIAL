@@ -65,29 +65,29 @@
             fint_size: 25
             bold: True
             halign: 'center'
-            pos_hint: {'x':-0.326,'y':0.365}
+            pos_hint: {'x':-0.280,'y':0.460}
             color: 0.4,0.4,0.4,1
 
         TempLabel:
             id:  torque_axial
             text: '-.- N.m'
-            pos_hint: {'x':-0.457,'y':0.30}
+            pos_hint: {'x':-0.420,'y':0.35}
 
         TempLabel:
             id:  pit01 #Pressão do tubo azul 
             text: '-.- psi'
-            pos_hint: {'x':-0.045,'y':0.085}
+            pos_hint: {'x':-0.030,'y':0.06}
 
 
         TempLabel:
             id:  pit02 #Pressão do tubo vermelho
             text: '-.- psi'
-            pos_hint: {'x':-0.03,'y':-0.09}
+            pos_hint: {'x':0.02,'y':-0.09}
 
         TempLabel:
             id:  pit03 #Pressão do ar de entrada
             text: '-.- mmH2O'
-            pos_hint: {'x':-0.2,'y':0.44}
+            pos_hint: {'x':0.05,'y':0.460}
 
         TempLabel:
             id: tit01 #Temperatura do tubo azul
@@ -97,22 +97,22 @@
         TempLabel:
             id: tit02 #Temperatura do tubo vermelho (trocador de calor)
             text: '-.- °C'
-            pos_hint: {'x':-0.025,'y':-0.305}
+            pos_hint: {'x':-0.015,'y':-0.340}
 
         TempLabel:
             id: vazao #Vazão do ar na saída do tubo
             text: '-.- m³/h'
-            pos_hint: {'x':0.44,'y':0.41}
+            pos_hint: {'x':0.34,'y':0.25}
 
         TempLabel:
             id: velocidade #Velocidade do ar na saída do tubo
             text: '-.- m/s'
-            pos_hint: {'x':0.438,'y':0.37}
+            pos_hint: {'x':0.34,'y':0.10}
 
         TempLabel:
             id: temperatura #temperatura do ar na saída do tubo
             text: '-.- °C'
-            pos_hint: {'x':0.438,'y':0.33}
+            pos_hint: {'x':0.34,'y':-0.05}
         Button:
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
@@ -125,7 +125,7 @@
         Button: 
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (50,20)
+            pos: (58,12)
             background_normal: 'assets/acionamento.png'
             background_down: 'assets/acionamento.png'
             on_release:
@@ -133,7 +133,7 @@
         Button: #Gráfico do compressor 1 (DECIDIR QUAL)
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (78,20)
+            pos: (85,12)
             background_normal: 'assets/graph.png'
             background_down: 'assets/graph.png'
             on_release:
@@ -143,7 +143,7 @@
         Button: 
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (230,20)
+            pos: (250,12)
             background_normal: 'assets/acionamento.png'
             background_down: 'assets/acionamento.png'
             on_release:
@@ -151,7 +151,7 @@
         Button: #Gráfico do compressor 2(DECIDIR QUAL)
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (258,20)
+            pos: (278,12)
             background_normal: 'assets/graph.png'
             background_down: 'assets/graph.png'
             on_release:
@@ -161,19 +161,111 @@
         Button: 
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (107,361)
+            pos: (127,361)
             background_normal: 'assets/acionamento.png'
             background_down: 'assets/acionamento.png'
             on_release:
-                root._graph.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO CLICAR
+                root._co_motor.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO CLICAR
         Button: #Gráfico do motor
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (137,361)
+            pos: (155,361)
             background_normal: 'assets/graph.png'
             background_down: 'assets/graph.png'
             on_release:
                 root._graph.open() #CRIAR UM GRÁFICO PARA ABRIR AO CLICAR
+        
+        #BOTÃO DE GRÁFICO DAS VARIÁVEIS
+        Button: #Gráfico para encoder axial - RPM
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (192,489)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico para Torque axial - N.m
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (40,450)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico papit01 pressão do tubo azul - psi
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (385,270)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico tit01 temperaatura do tubo azul - ºC
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (370,305)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico pit02 pressão do tubo vermelho - psi
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (425,190)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico tit02 temperatura do tubo vermelho - ºC
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (405,57)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+            
+        Button: #Gráfico pit03 pressão do tubo de ar - mmH20
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (475,489)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico Vazão no tubo de ar - N/m3
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (700,375)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico Velocidade no tubo de ar - m/s
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (700,290)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
+        Button: #Gráfico Temperatura no tubo de ar - ºC
+            size_hint: (None, None)
+            size: (0.65*90, 0.65*90)
+            pos: (700,212)
+            background_normal: 'assets/graph.png'
+            background_down: 'assets/graph.png'
+            on_release:
+                root._graph.open() 
+
 
 
         #INFORMAÇÕES DO BOTÃO (i) DO MOTOR
@@ -187,7 +279,7 @@
             background_color: (0,0,0,0)
             color: (0.4,0.4,0.4,1)
             border: (16,16,16,16)
-            pos: (155,440)
+            pos: (165,435)
             canvas.before: 
                 Color:
                     rgb: 0.4,0.4,0.4
@@ -208,7 +300,7 @@
             background_color: (0,0,0,0)
             color: (0.4,0.4,0.4,1)
             border: (16,16,16,16)
-            pos: (174,115)
+            pos: (186,102)
             canvas.before: 
                 Color:
                     rgb: 0.4,0.4,0.4
