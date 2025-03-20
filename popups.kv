@@ -460,17 +460,17 @@
                 #BOTÃO PARA LIGAR O MOTOR            
                 Button:
                     text: "Liga"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_axial()  
+                    on_release: app.root.acionaMotor(1)
 
                 #BOTÃO PARA DESLIGAR O MOTOR 
                 Button:
                     text: "Desliga"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()  
+                    on_release: app.root.acionaMotor(2) 
                 
                 #BOTÃO RESET
                 Button:
                     text: "Reset"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial() 
+                    on_release: app.root.acionaMotor(3)
 
 
             BoxLayout:
@@ -486,17 +486,17 @@
                 #Partida DIRETA   
                 Button:
                     text: "Direta"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_axial()  
+                    on_release: app.root.tipoPartida("DIRETA")
 
                 #Partida por Inversor 
                 Button:
                     text: "Inversor"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()  
+                    on_release: app.root.tipoPartida("INVERSOR") 
                 
                 #Partida por Soft-Start
                 Button:
                     text: "Soft-Start"
-                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()
+                    on_release: app.root.tipoPartida("SOFT-START")
 
             BoxLayout:
             #Manipulador de FREQUENCIA
