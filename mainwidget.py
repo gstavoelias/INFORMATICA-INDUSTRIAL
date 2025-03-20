@@ -95,12 +95,12 @@ class MainWidget(BoxLayout):
 
     def readFloat(self, addr):
         result = self._modbusClient.read_holding_registers(addr, 2)
-        decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
+        decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.BIG, wordorder=Endian.BIG)
         return decoder.decode_32bit_float()
     
     def readInt(self, addr):
         result = self._modbusClient.read_holding_registers(addr, 1)
-        decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.BIG, wordorder=Endian.LITTLE)
+        decoder = BinaryPayloadDecoder.fromRegisters(result, byteorder=Endian.BIG, wordorder=Endian.BIG)
         return decoder.decode_16bit_int()
     
     def writeHoldingRegister(self, addr, value):
@@ -108,6 +108,31 @@ class MainWidget(BoxLayout):
 
     def writeSingleCoil(self, addr, value):
         self._modbusClient.write_single_coil(addr, value)
+
+    def open_graph(self, variable_name="temperatura"):
+        """Abre o gráfico correspondente à variável clicada."""
+        try:
+            if variable_name in self._meas["values"]:
+                self._graph.ids.graph.clearPlots()
+                plot_color = (1, 0, 0, 1)  # Define uma cor (vermelho, por exemplo)
+
+                # Criando o gráfico para a variável correspondente
+                p = LinePlot(line_width=1.5, color=plot_color)
+                timestamps = [self._meas["timestamp"]]
+                valores = [self._meas["values"][variable_name]]
+
+                p.points = [(i, val) for i, val in enumerate(valores)]
+                self._graph.ids.graph.add_plot(p)
+
+                # Atualiza e exibe o gráfico
+                self._graph.ids.graph.xmax = len(valores)
+                self._graph.ids.graph.update_x_labels(timestamps)
+                self._graph.open()
+            else:
+                print(f"Variável '{variable_name}' não encontrada nos dados.")
+        except Exception as e:
+            print(f"Erro ao abrir o gráfico: {e}")
+
 
 
     def tipoPartida(self, tipo_partida):
