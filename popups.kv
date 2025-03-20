@@ -512,8 +512,8 @@
                     max: 61 
                     value_track: True
                     value_track_color: [1, 0, 0, 1]
-                    on_touch_move: 
-                        #app.root.velocidade_inversor()
+                    on_touch_up: 
+                        app.root.writeHoldingRegister(1313, int(velocidade_inversor.value)*10)
                 Label:
                     text: str(int(velocidade_inversor.value))
 

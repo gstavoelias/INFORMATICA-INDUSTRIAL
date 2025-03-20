@@ -138,10 +138,7 @@ class MainWidget(BoxLayout):
             comando = 2 if tipo_partida == "INVERSOR" else 1 if tipo_partida == "SOFT-START" else 3
             self.writeHoldingRegister(1324, comando)
             self.tipo_partida = tipo_partida
-            if tipo_partida == "INVERSOR":
-                #TODO: CRIAR UM BOTÃO PRA ESCOLHER O VALOR DA RAMPA -> MIM NÃO SABER COLOCAR, MAS TA CRIADO
-                self.writeHoldingRegister(1314, 100)
-                self.writeHoldingRegister(1315, 100)
+
         except Exception as e:
             print(f"aqui: {e}")
 
@@ -161,9 +158,6 @@ class MainWidget(BoxLayout):
             comando = 1 if tipo_partida == "HERMÉTICO" else 0 
             self.writeHoldingRegister(1328, comando)
             self.tipo_partida = tipo_partida
-            if tipo_partida == "HERMÉTICO":
-                #TODO: CRIAR UM BOTÃO PRA ESCOLHER O VALOR DA RAMPA -> MIM NÃO SABER COLOCAR, MAS TA CRIADO
-                self.writeHoldingRegister(1336, 10)
         except Exception as e:
             print(f"aqui: {e}")
 
