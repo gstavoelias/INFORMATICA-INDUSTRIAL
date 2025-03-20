@@ -1,5 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
-from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraCompressor, DataGraphPopup, HistGraphPopup, ComandoPopup
+from popups import ModbusPopup, ScanPopup, MonitoramentoPopup, MonitoraTemperatura, MonitoraCompressor, DataGraphPopup, HistGraphPopup, ComandoPopup, ComandoCOPopup
 from pymodbus.payload import BinaryPayloadBuilder, BinaryPayloadDecoder
 from pymodbus.constants import Endian
 from pyModbusTCP.client import ModbusClient
@@ -35,8 +35,10 @@ class MainWidget(BoxLayout):
         self._monitoraCompressor = MonitoraCompressor()
         self._graph = DataGraphPopup(self.max_points, (1,0,0,1))
         self._hgraph = HistGraphPopup(tags=self._tags)
-        #TENTANDO IMPLEMENTAR O BOTÃO DE COMANDO
+        #IMPLEMENTAR O BOTÃO DE COMANDO DO MOTOR
         self._co_motor = ComandoPopup()
+        #IMPLEMENTAR O BOTÃO DE COMANDO DO COMPRESSOR
+        self._co_compressor = ComandoCOPopup()
         self._meas = {}
         self._meas["timestamp"] = None
         self._meas["values"] = {}
@@ -112,7 +114,7 @@ class MainWidget(BoxLayout):
             self.writeHoldingRegister(1324, comando)
             self.tipo_partida = tipo_partida
             if tipo_partida == "INVERSOR":
-                #TODO: CRIAR UM BOTÃO PRA ESCOLHER O VALOR DA RAMPA
+                #TODO: CRIAR UM BOTÃO PRA ESCOLHER O VALOR DA RAMPA -> MIM NÃO SABER COLOCAR, MAS TA CRIADO
                 self.writeHoldingRegister(1314, 100)
                 self.writeHoldingRegister(1315, 100)
         except Exception as e:
@@ -126,6 +128,30 @@ class MainWidget(BoxLayout):
         self.writeHoldingRegister(1314, int(value)*10)
         time.sleep(0.5)
         self.writeHoldingRegister(1315, int(value)*10)
+
+    #TENTATIVA DE ACIONAMENTO DOS COMPRESSORES#
+
+    def tipoPartidaCO(self, tipo_partida):
+        try:
+            comando = 1 if tipo_partida == "HERMÉTICO" else 0 
+            self.writeHoldingRegister(1328, comando)
+            self.tipo_partida = tipo_partida
+            if tipo_partida == "HERMÉTICO":
+                #TODO: CRIAR UM BOTÃO PRA ESCOLHER O VALOR DA RAMPA -> MIM NÃO SABER COLOCAR, MAS TA CRIADO
+                self.writeHoldingRegister(1336, 10)
+        except Exception as e:
+            print(f"aqui: {e}")
+
+    def acionaCompressor(self, comando):
+        addr = 1328 
+        self.writeHoldingRegister(addr, int(comando))
+
+    def setRampaCO(self, value):
+        self.writeHoldingRegister(1236, int(value)*10)
+        time.sleep(0.5)
+        self.writeHoldingRegister(1236, int(value)*10)
+                
+    #FIM DA TENTATIVA#
 
 
 

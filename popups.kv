@@ -432,10 +432,12 @@
         valign: 'center'
 
 
-#TENTATIVA DO BOTÃO DE COMANDO - MOTOR
+#TENTATIVA DO BOTÃO DE COMANDO - MOTOR (DEU CERTO!)
 <ComandoPopup>:
-    title:"Comandos do Motor"
+    title:"COMANDOS DO MOTOR"
     title_align: 'center'
+    bold: True
+    font_size: 18
     size_hint_y: None
     size_hint_x: None
     height: 600
@@ -452,20 +454,23 @@
                 padding: [20, 20, 20, 20]
                 spacing: 10
                 Label:
-                    text: "Ventilador"
+                    text: "VETILADOR"
+                    bold: True
+                    font_size: 18
+                #BOTÃO PARA LIGAR O MOTOR            
                 Button:
                     text: "Liga"
-                    on_release: app.root.acionaMotor(1)
+                    #on_release: app.root.sel_tipo_ventiladorColumn_axial()  
 
                 #BOTÃO PARA DESLIGAR O MOTOR 
                 Button:
                     text: "Desliga"
-                    on_release: app.root.acionaMotor(2)
+                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()  
                 
                 #BOTÃO RESET
                 Button:
                     text: "Reset"
-                    on_release: app.root.acionaMotor(3)
+                    #on_release: app.root.sel_tipo_ventiladorColumn_radial() 
 
 
             BoxLayout:
@@ -474,41 +479,58 @@
                 padding: [20, 20, 20, 20]
                 spacing: 10
                 Label:
-                    text: "Tipo de Partida"
+                    text: "TIPO DE PARTIDA"
+                    font_size: 18
+                    bold: True
 
                 #Partida DIRETA   
                 Button:
                     text: "Direta"
-                    on_release: app.root.tipoPartida("DIRETA")
+                    #on_release: app.root.sel_tipo_ventiladorColumn_axial()  
 
                 #Partida por Inversor 
                 Button:
                     text: "Inversor"
-                    on_release: app.root.tipoPartida("INVERSOR")
+                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()  
                 
                 #Partida por Soft-Start
                 Button:
                     text: "Soft-Start"
-                    on_release: app.root.tipoPartida("SOFT-START")
+                    #on_release: app.root.sel_tipo_ventiladorColumn_radial()
 
             BoxLayout:
             #Manipulador de FREQUENCIA
                 orientation:'vertical'
                 Label:                      
-                    text: 'Frequência [Hz]'
+                    text: 'FREQUÊNCIA [Hz]'
+                    bold: True
+                    font_size: 18
 
                 Slider:
                     id: velocidade_inversor
-                    min: 10
+                    min: 0
                     max: 61 
                     value_track: True
                     value_track_color: [1, 0, 0, 1]
-                    on_touch_up: 
-                        app.root.writeHoldingRegister(1313, int(velocidade_inversor.value)*10)  
-                        #app.root.setRampa(velocidade_rampa.value)
+                    on_touch_move: 
+                        #app.root.velocidade_inversor()
                 Label:
                     text: str(int(velocidade_inversor.value))
 
+                Label:                      
+                    text: 'TEMPO DA RAMPA [s]'
+                    bold: True
+                    font_size: 18
+                Slider:
+                    id: tempo_rampa
+                    min: 0
+                    max: 101
+                    value_track: True
+                    value_track_color: [1, 0, 0, 1]
+                    on_touch_move: 
+                        #app.root.velocidade_inversor()
+                Label:
+                    text: str(int(tempo_rampa.value))
 
         BoxLayout:
             orientation: 'vertical'
@@ -528,7 +550,6 @@
                 ToggleButton:
                     text: "Axial"
                     group: "ventilador"
-                    state: "down"
                 #VENTILADOR RADIAL
                 ToggleButton:
                     text: "Radial"
@@ -547,12 +568,10 @@
                 ToggleButton:
                     text: "Alto Rendimento"
                     group: "motor"
-                    state: "down"
                 #Convencional
                 ToggleButton:
-                    text: "Alto Rendimento"
+                    text: "Convencional"
                     group: "motor"
-                    state: "down"
 
             #Botões para confirmar e cancelar        
             BoxLayout:
@@ -561,7 +580,138 @@
                 Button:
                     text: "Cancelar"
                     size_hint_y: None
-                    height: 50
+                    height: 35
+                    on_release: root.dismiss()
+
+
+
+
+
+<ComandoCOPopup>:
+    title:"COMANDOS DO COMPRESSOR"
+    title_align: 'center'
+    bold: True
+    font_size: 18
+    size_hint_y: None
+    size_hint_x: None
+    height: 600
+    width: 800
+    auto_dismiss: False
+    BoxLayout:
+        id: comando_layout
+        orientation:'horizontal'
+        size_hint_y: 0.9
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                orientation:'vertical'
+                padding: [20, 20, 20, 20]
+                spacing: 10
+                Label:
+                    text: "SELEÇÃO DO COMPRESSOR"
+                    font_size: 18
+                    bold: True
+                ToggleButton:
+                    text: "SCROOL"
+                    group: "compressor"
+                ToggleButton:
+                    text: "HERMÉTICO"
+                    group: "compressor"
+            BoxLayout:
+                orientation:'vertical'
+                padding: [20, 20, 20, 20]
+                spacing: 10
+                Label:
+                    text: "SELEÇÃO DO COMPRESSOR"
+                    font_size: 18
+                    bold: True
+                Button:
+                    text: "Liga"
+                    group: "compressor"
+                Button:
+                    text: "Desliga"
+                    group: "compressor"
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [20, 20, 20, 20]       
+            spacing: 10
+            Label:
+                text: "UMIDIFICADOR"
+                font_size: 18
+                bold: True
+            Button:
+                text: "Liga"
+                group: "compressor"
+            Button:
+                text: "Desliga"
+                group: "compressor"
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: [20, 20, 20, 20]       
+                spacing: 10
+                Button:
+                    text: "MAN SEL."
+                Button:
+                    text: "AUTO SEL."
+                Button:
+                    text: "MANUAL"
+            Label:
+                text: "FREQUÊNCIA [Hz]"
+                font_size: 18
+                bold: True
+            Slider:
+                id: velocidade_inversor #AJUSTAR
+                min: 0
+                max: 61 
+                value_track: True
+                value_track_color: [1, 0, 0, 1]
+                on_touch_move: 
+
+            Label:
+                text: str(int(velocidade_inversor.value))
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [20, 20, 20, 20]       
+            spacing: 10
+            Label:
+                text: "AQUECEDOR 1"
+                font_size: 18
+                bold: True
+            Button:
+                text: "Liga"
+                group: "aquecedor"
+            Button:
+                text: "Desliga"
+                group: "aquecedor"
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: [20, 20, 20, 20]       
+                spacing: 10
+        
+            Label:
+                text: "AQUECEDOR 2"
+                font_size: 18
+                bold: True
+            Button:
+                text: "Liga"
+                group: "aquecedor"
+            Button:
+                text: "Desliga"
+                group: "aquecedor"
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: [20, 20, 20, 20]       
+                spacing: 10
+                
+            #Botões para confirmar e cancelar        
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: 10
+                Button:
+                    text: "Cancelar"
+                    size_hint_y: None
+                    height: 35
                     on_release: root.dismiss()
 
 

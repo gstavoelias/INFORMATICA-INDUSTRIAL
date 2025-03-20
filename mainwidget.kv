@@ -48,16 +48,7 @@
         Image: 
             source: 'assets/fundo.png'
 
-        Label: 
-            id: lb_encoder_axial
-            size_hint: (None,None)
-            size: (15,15)
-            canvas: 
-                Color:
-                    rgb:(0.165,0.376,0.647)
-                Rectangle: 
-                    size: self.size 
-                    pos: (150,400)
+
         
         Label:
             id:  encoder_axial #Rotação mecânica do ventilador
@@ -113,55 +104,32 @@
             id: temperatura #temperatura do ar na saída do tubo
             text: '-.- °C'
             pos_hint: {'x':0.34,'y':-0.05}
-        Button:
-            size_hint: (None, None)
-            size: (0.65*90, 0.65*90)
-            background_normal: 'assets/graph.png'
-            background_down: 'assets/graph.png'
-            on_release:
-                root._graph.open()
+
 
         #ACIONAMENTO DO COMPRESSOR 1 (DECIDIR QUAL)
         Button: 
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (58,12)
+            pos: (145,12)
             background_normal: 'assets/acionamento.png'
             background_down: 'assets/acionamento.png'
             on_release:
-                root._graph.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO CLICAR
+                root._co_compressor.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO Clicar no acionamento do compressor
         Button: #Gráfico do compressor 1 (DECIDIR QUAL)
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (85,12)
+            pos: (185,12)
             background_normal: 'assets/graph.png'
             background_down: 'assets/graph.png'
             on_release:
                 root._graph.open() #CRIAR UM GRÁFICO PARA ABRIR AO CLICAR
 
-        #ACIONAMENTO DO COMPRESSOR 2 (DECIDIR QUAL)
-        Button: 
-            size_hint: (None, None)
-            size: (0.65*90, 0.65*90)
-            pos: (250,12)
-            background_normal: 'assets/acionamento.png'
-            background_down: 'assets/acionamento.png'
-            on_release:
-                root._graph.open() #CRIAR UM LAYOUT PARA ABRIR QUANDO CLICAR
-        Button: #Gráfico do compressor 2(DECIDIR QUAL)
-            size_hint: (None, None)
-            size: (0.65*90, 0.65*90)
-            pos: (278,12)
-            background_normal: 'assets/graph.png'
-            background_down: 'assets/graph.png'
-            on_release:
-                root._graph.open() #CRIAR UM GRÁFICO PARA ABRIR AO CLICAR
 
         #ACIONAMENTO O MOTOR
         Button: 
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (127,361)
+            pos: (123,361)
             background_normal: 'assets/acionamento.png'
             background_down: 'assets/acionamento.png'
             on_release:
@@ -169,7 +137,7 @@
         Button: #Gráfico do motor
             size_hint: (None, None)
             size: (0.65*90, 0.65*90)
-            pos: (155,361)
+            pos: (166,361)
             background_normal: 'assets/graph.png'
             background_down: 'assets/graph.png'
             on_release:
@@ -316,15 +284,6 @@
             pos_hint: {'right': 0.98, 'center_y': 0.47}  # Alinha à direita
             spacing: 4.5
 
-            #Button:
-            #    text: "Comandos"
-            #    size_hint_y: None
-            #    height: '50dp'
-            #    background_color: (0.4,0.4,0.4,1)
-            #    background_normal: ""
-            #    color: (1,1,1,1)
-            #    on_release: 
-
             Button:
                 text: "Dados Históricos"
                 size_hint_y: None
@@ -341,24 +300,3 @@
     color: 0.4,0.4,0.4,1
 
 
-#Barra indicadora de variáveis
-<DinamicBar>:
-    orientation: "horizontal"
-    spacing: 10
-
-    Label:
-        text: "TESTE BARRA"
-        size_hint: None, None
-        size: 80, 30
-
-    ProgressBar:
-        min: 0
-        max: 60
-        value: root.encoder_axial
-        size_hint: 1, None
-        height: 30
-
-    Label:
-        text: f"{root.encoder_axial:.1f} °C"
-        size_hint: None, None
-        size: 60, 30
