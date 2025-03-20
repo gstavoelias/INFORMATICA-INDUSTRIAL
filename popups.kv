@@ -528,7 +528,7 @@
                     value_track: True
                     value_track_color: [1, 0, 0, 1]
                     on_touch_move: 
-                        #app.root.velocidade_inversor()
+                        app.root.setRampa(tempo_rampa.value)
                 Label:
                     text: str(int(tempo_rampa.value))
 
