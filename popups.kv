@@ -301,20 +301,20 @@
         orientation: 'vertical'
         TimeSeriesGraph:
             id: graph
-            xlabel: 'Horário'
-            ylabel: 'Temperatura [°C]'
-            background_color: 0.5,0.5,0.5
-            x_ticks_minor: 1
-            x_ticks_major: 5
-            y_ticks_major: 100
-            y_grid_label: True
-            x_grid_label: True
-            padding: 5
+            xlabel: 'Horário'  # Rótulo do eixo X
+            ylabel: 'Valor'  # Rótulo do eixo Y
+            background_color: 0.3, 0.3, 0.3, 1  # Fundo cinza escuro
+            x_ticks_minor: 1  # Pequenos marcadores no eixo X
+            x_ticks_major: 5  # Grandes marcadores no eixo X
+            y_ticks_major: 10  # Grandes marcadores no eixo Y
+            y_grid_label: True  # Ativar rótulos no eixo Y
+            x_grid_label: True  # Ativar rótulos no eixo X
+            padding: 10  # Aumentar espaçamento para os rótulos aparecerem
             x_grid: True
             y_grid: True
             xmin: 0
             ymin: 0
-            ymax: 500
+            ymax: 100  # Inicialmente, ajustado dinamicamente depois
         BoxLayout:
             orientation: 'horizontal'
             size_hint: (1, 0.05)
