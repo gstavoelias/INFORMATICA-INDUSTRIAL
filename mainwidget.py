@@ -35,9 +35,7 @@ class MainWidget(BoxLayout):
         self._monitoraCompressor = MonitoraCompressor()
         self._graph = DataGraphPopup(self.max_points, (1,0,0,1))
         self._hgraph = HistGraphPopup(tags=self._tags)
-        #IMPLEMENTAR O BOTÃO DE COMANDO DO MOTOR
         self._co_motor = ComandoPopup()
-        #IMPLEMENTAR O BOTÃO DE COMANDO DO COMPRESSOR
         self._co_compressor = ComandoCOPopup()
         self._meas = {}
         self._meas["timestamp"] = None
@@ -208,7 +206,6 @@ class MainWidget(BoxLayout):
 
 
     def getDataDB(self):
-        # with self.lock:
         init_t = self.parseDTString(self._hgraph.ids.txt_init_time.text)
         final_t = self.parseDTString(self._hgraph.ids.txt_final_time.text)
         cols = []
@@ -265,12 +262,12 @@ class MainWidget(BoxLayout):
             print("Erro: ", e.args)
 
     def acesso_dados_historicos(self,init_t, final_t): 
-        # with self.lock:
-        try:
-            result = self._session.query(DadoVentilador).filter(DadoVentilador.timestamp.between(init_t,final_t)).all()
-            return [col.get_attr_printable_dict() for col in result]
-        except Exception as e:
-            print("Erro: ", e.args)
+        with self.lock:
+            try:
+                result = self._session.query(DadoVentilador).filter(DadoVentilador.timestamp.between(init_t,final_t)).all()
+                return [col.get_attr_printable_dict() for col in result]
+            except Exception as e:
+                print("Erro: ", e.args)
 
 
 
