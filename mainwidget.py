@@ -256,12 +256,12 @@ class MainWidget(BoxLayout):
             print("Erro: ", e.args)
 
     def acesso_dados_historicos(self,init_t, final_t): 
-        with self.lock:
-            try:
-                result = self._session.query(DadoVentilador).filter(DadoVentilador.timestamp.between(init_t,final_t)).all()
-                return [col.get_attr_printable_dict() for col in result]
-            except Exception as e:
-                print("Erro: ", e.args)
+        # with self.lock:
+        try:
+            result = self._session.query(DadoVentilador).filter(DadoVentilador.timestamp.between(init_t,final_t)).all()
+            return [col.get_attr_printable_dict() for col in result]
+        except Exception as e:
+            print("Erro: ", e.args)
 
 
 
