@@ -296,7 +296,7 @@
                 text: "A"
 
 <DataGraphPopup>:
-    title: "Gráfico de temperatura no ventilador"
+    title: "Gráfico do ventilador"
     BoxLayout:
         orientation: 'vertical'
         TimeSeriesGraph:
@@ -357,7 +357,7 @@
 
 
 <HistGraphPopup>:
-    title: "Histórico de Temperatura na Refinaria"
+    title: "Dados Históricos"
     BoxLayout:
         orientation: 'vertical'
         TimeSeriesGraph:
@@ -366,7 +366,7 @@
             ylabel: 'Valor'  # Rótulo do eixo Y
             background_color: 0.3, 0.3, 0.3, 1  # Fundo cinza escuro
             x_ticks_minor: 1  # Pequenos marcadores no eixo X
-            x_ticks_major: 5  # Grandes marcadores no eixo X
+            x_ticks_major: 50  # Grandes marcadores no eixo X
             y_ticks_major: 10  # Grandes marcadores no eixo Y
             y_grid_label: True  # Ativar rótulos no eixo Y
             x_grid_label: True  # Ativar rótulos no eixo X
