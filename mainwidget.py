@@ -4,7 +4,7 @@ from pymodbus.payload import BinaryPayloadBuilder, BinaryPayloadDecoder
 from pymodbus.constants import Endian
 from pyModbusTCP.client import ModbusClient
 from kivy.core.window import Window
-from threading import Thread
+from threading import Thread, Lock
 from time import sleep
 from utils import Units, ModbusType
 from datetime import datetime
@@ -45,6 +45,8 @@ class MainWidget(BoxLayout):
         Base.metadata.create_all(engine)
         self._session = Session()
         self._tipo_partida = None
+        self.lock = Lock()
+
 
     def startDataRead(self, ip, port):
         self._serverIP = ip
@@ -171,63 +173,62 @@ class MainWidget(BoxLayout):
 
     def updateDB(self):
         try:
-            self._meas["values"]["timestamp"] = self._meas["timestamp"]
-            data = DadoVentilador(**self._meas["values"])
-            self._session.add(data)
-            self._session.commit()
+            with self.lock:
+                self._meas["values"]["timestamp"] = self._meas["timestamp"]
+                data = DadoVentilador(**self._meas["values"])
+                self._session.add(data)
+                self._session.commit()
         except Exception as e:
             print(e)
 
 
 
     def getDataDB(self):
-        print("foi")
-        init_t = self.parseDTString(self._hgraph.ids.txt_init_time.text)
-        final_t = self.parseDTString(self._hgraph.ids.txt_final_time.text)
-        cols = []
-        for sensor in self._hgraph.ids.sensores.children:
-            if sensor.ids.checkbox.active:
-                cols.append(sensor.id)
-        if init_t is None or final_t is None or len(cols)==0:
-            return 
-        cols.append("timestamp")
-        
-
-
-        try:
-            dados = self.acesso_dados_historicos(init_t, final_t)
-            print(dados)
+        with self.lock:
+            init_t = self.parseDTString(self._hgraph.ids.txt_init_time.text)
+            final_t = self.parseDTString(self._hgraph.ids.txt_final_time.text)
+            cols = []
+            for sensor in self._hgraph.ids.sensores.children:
+                if sensor.ids.checkbox.active:
+                    cols.append(sensor.id)
+            if init_t is None or final_t is None or len(cols)==0:
+                return 
+            cols.append("timestamp")
             
-            if not dados or len(dados) == 0:
-                return
+            try:
+                dados = self.acesso_dados_historicos(init_t, final_t)
+                print(dados)
+                
+                if not dados or len(dados) == 0:
+                    return
 
-            self._hgraph.ids.graph.clearPlots()
-            
-            # Garante que 'timestamp' está presente
-            if "timestamp" not in dados[0]:
-                print("Erro: 'timestamp' não encontrado nos dados.")
-                return
+                self._hgraph.ids.graph.clearPlots()
+                
+                # Garante que 'timestamp' está presente
+                if "timestamp" not in dados[0]:
+                    print("Erro: 'timestamp' não encontrado nos dados.")
+                    return
 
-            # Converte timestamps
-            # timestamps = [datetime.strptime(item["timestamp"], "%Y-%m-%d %H:%M:%S.%f") for item in dados]
-            timestamps = [item["timestamp"] for item in dados]
-            for key in dados[0].keys():
-                if key not in cols or key == "timestamp":
-                    continue
+                # Converte timestamps
+                # timestamps = [datetime.strptime(item["timestamp"], "%Y-%m-%d %H:%M:%S.%f") for item in dados]
+                timestamps = [item["timestamp"] for item in dados]
+                for key in dados[0].keys():
+                    if key not in cols or key == "timestamp":
+                        continue
 
-                plot_color = (random.random(), random.random(), random.random(), 1)
-                p = LinePlot(line_width=1.5, color=plot_color)
+                    plot_color = (random.random(), random.random(), random.random(), 1)
+                    p = LinePlot(line_width=1.5, color=plot_color)
 
-                # Mapeia os valores da chave `key` em relação aos índices dos timestamps
-                p.points = [(i, item[key]) for i, item in enumerate(dados) if key in item]
+                    # Mapeia os valores da chave `key` em relação aos índices dos timestamps
+                    p.points = [(i, item[key]) for i, item in enumerate(dados) if key in item]
 
-                self._hgraph.ids.graph.add_plot(p)
+                    self._hgraph.ids.graph.add_plot(p)
 
-            self._hgraph.ids.graph.xmax = len(timestamps)
-            self._hgraph.ids.graph.update_x_labels(timestamps)
+                self._hgraph.ids.graph.xmax = len(timestamps)
+                self._hgraph.ids.graph.update_x_labels(timestamps)
 
-        except Exception as e:
-            print(f"Erro ao carregar gráfico: {e}")
+            except Exception as e:
+                print(f"Erro ao carregar gráfico: {e}")
 
     
     def parseDTString(self, datetime_str):
@@ -240,11 +241,12 @@ class MainWidget(BoxLayout):
             print("Erro: ", e.args)
 
     def acesso_dados_historicos(self,init_t, final_t): 
-        try:
-            result = self._session.query(DadoVentilador).filter(DadoVentilador.timestamp.between(init_t,final_t)).all()
-            return [col.get_attr_printable_dict() for col in result]
-        except Exception as e:
-            print("Erro: ", e.args)
+        with self.lock:
+            try:
+                result = self._session.query(DadoVentilador).filter(DadoVentilador.timestamp.between(init_t,final_t)).all()
+                return [col.get_attr_printable_dict() for col in result]
+            except Exception as e:
+                print("Erro: ", e.args)
 
 
 
